@@ -11,7 +11,11 @@
 		F667490B2C358AFF00C517AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F667490A2C358AFF00C517AA /* ContentView.swift */; };
 		F667490D2C358B0000C517AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F667490C2C358B0000C517AA /* Assets.xcassets */; };
 		F66749102C358B0000C517AA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F667490F2C358B0000C517AA /* Preview Assets.xcassets */; };
-		F66749502C358EF700C517AA /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = F667494F2C358EF700C517AA /* Item.swift */; };
+		F66749502C358EF700C517AA /* VideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F667494F2C358EF700C517AA /* VideoListView.swift */; };
+		F69715E42C43C73E002BC23E /* FileImporterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69715E32C43C73E002BC23E /* FileImporterView.swift */; };
+		F69715E62C43C7B4002BC23E /* DirectoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69715E52C43C7B4002BC23E /* DirectoryListView.swift */; };
+		F69715E82C43C96E002BC23E /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69715E72C43C96E002BC23E /* VideoPlayerView.swift */; };
+		F69715EA2C440250002BC23E /* VideoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69715E92C440250002BC23E /* VideoItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,7 +25,11 @@
 		F667490C2C358B0000C517AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F667490F2C358B0000C517AA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F66749112C358B0000C517AA /* VisualVanguard.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VisualVanguard.entitlements; sourceTree = "<group>"; };
-		F667494F2C358EF700C517AA /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		F667494F2C358EF700C517AA /* VideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListView.swift; sourceTree = "<group>"; };
+		F69715E32C43C73E002BC23E /* FileImporterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileImporterView.swift; sourceTree = "<group>"; };
+		F69715E52C43C7B4002BC23E /* DirectoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryListView.swift; sourceTree = "<group>"; };
+		F69715E72C43C96E002BC23E /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		F69715E92C440250002BC23E /* VideoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +64,11 @@
 			children = (
 				F66749082C358AFF00C517AA /* VisualVanguardApp.swift */,
 				F667490A2C358AFF00C517AA /* ContentView.swift */,
-				F667494F2C358EF700C517AA /* Item.swift */,
+				F69715E72C43C96E002BC23E /* VideoPlayerView.swift */,
+				F69715E52C43C7B4002BC23E /* DirectoryListView.swift */,
+				F69715E32C43C73E002BC23E /* FileImporterView.swift */,
+				F667494F2C358EF700C517AA /* VideoListView.swift */,
+				F69715E92C440250002BC23E /* VideoItemView.swift */,
 				F667490C2C358B0000C517AA /* Assets.xcassets */,
 				F66749112C358B0000C517AA /* VisualVanguard.entitlements */,
 				F667490E2C358B0000C517AA /* Preview Content */,
@@ -143,8 +155,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F667490B2C358AFF00C517AA /* ContentView.swift in Sources */,
-				F66749502C358EF700C517AA /* Item.swift in Sources */,
+				F66749502C358EF700C517AA /* VideoListView.swift in Sources */,
+				F69715E42C43C73E002BC23E /* FileImporterView.swift in Sources */,
+				F69715E62C43C7B4002BC23E /* DirectoryListView.swift in Sources */,
+				F69715EA2C440250002BC23E /* VideoItemView.swift in Sources */,
 				F66749092C358AFF00C517AA /* VisualVanguardApp.swift in Sources */,
+				F69715E82C43C96E002BC23E /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,64 +6,93 @@
 //
 
 import SwiftUI
-import SwiftData
+import AVKit
 
 struct ContentView: View {
-  @Environment(\.modelContext) private var modelContext
-  @Query private var items: [Item]
+  @State private var selectedDirectory: String?
+  @State private var videos: [URL] = []
+  @State private var isImporting: Bool = false
+  @State private var selectedVideo: URL?
+
+  var filteredVideos: [URL] {
+    guard let selectedDirectory = selectedDirectory else {
+      return videos
+    }
+    return videos.filter { $0.deletingLastPathComponent().lastPathComponent == selectedDirectory }
+  }
 
   var body: some View {
     NavigationSplitView {
-      HStack {
-        Image(systemName: "folder")
-        Text("Screen Savers")
-        Spacer()
-        Text("\(items.count)")
-          .foregroundColor(.secondary)
-          .font(.headline)
-      }
-      .font(.title3)
-      .padding(.horizontal, 16)
-      List {
-        ForEach(items) { item in
-          NavigationLink {
-            Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-          } label: {
-            Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-          }
+      VStack {
+        Button("Import Videos") {
+          isImporting = true
         }
-        .onDelete(perform: deleteItems)
+        .padding()
+
+        DirectoryList(selectedDirectory: $selectedDirectory)
       }
-      .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-      .toolbar {
-        ToolbarItem {
-          Button(action: addItem) {
-            Label("Add Item", systemImage: "plus")
-          }
-        }
+    } content: {
+      VideoList(videos: filteredVideos, selectedVideo: $selectedVideo) { newSelection in
+        selectedVideo = newSelection
       }
     } detail: {
-      Text("Select an item")
+      if let selectedVideo = selectedVideo {
+        VideoPlayerView(url: selectedVideo)
+          .id(selectedVideo)
+      } else {
+        Text("No video selected")
+      }
+    }
+    .fileImporter(
+      isPresented: $isImporting,
+      allowedContentTypes: [UTType.movie],
+      allowsMultipleSelection: true
+    ) { result in
+      handleImport(result)
+    }
+    .onAppear {
+      loadVideos()
     }
   }
 
-  private func addItem() {
-    withAnimation {
-      let newItem = Item(timestamp: Date())
-      modelContext.insert(newItem)
+    func handleImport(_ result: Result<[URL], Error>) {
+      do {
+        let selectedURLs = try result.get()
+        for url in selectedURLs {
+          if url.startAccessingSecurityScopedResource() {
+            copyVideoToAppDirectory(from: url)
+            url.stopAccessingSecurityScopedResource()
+          }
+        }
+        loadVideos()
+      } catch {
+        print("Error importing files: \(error.localizedDescription)")
+      }
     }
-  }
 
-  private func deleteItems(offsets: IndexSet) {
-    withAnimation {
-      for index in offsets {
-        modelContext.delete(items[index])
+    func copyVideoToAppDirectory(from sourceURL: URL) {
+      guard let destinationURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+      let newURL = destinationURL.appendingPathComponent(sourceURL.lastPathComponent)
+
+      do {
+        if FileManager.default.fileExists(atPath: newURL.path) {
+          try FileManager.default.removeItem(at: newURL)
+        }
+        try FileManager.default.copyItem(at: sourceURL, to: newURL)
+      } catch {
+        print("Error copying file: \(error.localizedDescription)")
+      }
+    }
+
+    func loadVideos() {
+      guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+
+      do {
+        let videoURLs = try FileManager.default.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
+          .filter { $0.pathExtension.lowercased() == "mp4" }
+        videos = videoURLs
+      } catch {
+        print("Error loading videos: \(error.localizedDescription)")
       }
     }
   }
-}
-
-#Preview {
-  ContentView()
-    .modelContainer(for: Item.self, inMemory: true)
-}
